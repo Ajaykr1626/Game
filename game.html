@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tiki Topple Game</title>
+    <style>
+        body { font-family: Arial; text-align: center; }
+        button { margin: 5px; padding: 10px; }
+    </style>
+</head>
+<body>
+
+<h1>🎮 Tiki Topple Game</h1>
+
+<p id="player">Player 1 Turn</p>
+<p id="stack"></p>
+<p id="positions"></p>
+
+<button onclick="move(1)">Move 1</button>
+<button onclick="move(2)">Move 2</button>
+<button onclick="move(3)">Move 3</button>
+
+<br>
+
+<button onclick="reorder()">Reorder Top 2</button>
+
+<script>
+let stack = ["A","B","C","D"];
+let positions = {A:0,B:0,C:0,D:0};
+let currentPlayer = 1;
+
+function update() {
+    document.getElementById("stack").innerText = "Stack: " + stack.join(" ");
+    document.getElementById("positions").innerText =
+        "Positions: " + JSON.stringify(positions);
+    document.getElementById("player").innerText =
+        "Player " + currentPlayer + " Turn";
+}
+
+function move(n) {
+    for (let i = 0; i < n; i++) {
+        positions[stack[i]] += 1;
+    }
+    switchPlayer();
+    update();
+}
+
+function reorder() {
+    let temp = stack[0];
+    stack[0] = stack[1];
+    stack[1] = temp;
+    switchPlayer();
+    update();
+}
+
+function switchPlayer() {
+    currentPlayer = (currentPlayer === 1) ? 2 : 1;
+}
+
+update();
+</script>
+
+</body>
+</html>
